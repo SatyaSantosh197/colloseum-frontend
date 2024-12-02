@@ -33,7 +33,13 @@ export default function AuthPage() {
       });
 
       if (res.ok) {
-        router.push(`/home/${role}`);
+        if (role === "player") {
+          // Redirect to player home page after successful sign-in/signup
+          router.push("/player/home");
+        } else {
+          // You can handle other roles here if needed (e.g., for organisers)
+          router.push(`/${role}/dashboard`);
+        }
       } else {
         const errorData = await res.json();
         alert(`Error: ${errorData.errorMessage}`);
