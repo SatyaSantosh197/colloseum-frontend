@@ -47,9 +47,9 @@ const TournamentList = () => {
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gray-50 rounded-lg shadow-md space-y-6">
       {joinedTournaments.length > 0 ? (
-        joinedTournaments.map((tournament) => (
-          // Make sure you're passing the tournament object directly
-          <Tournament key={tournament._id} tournament={tournament} />
+        joinedTournaments.map((tournament, index) => (
+          // Ensure the key is unique by using both _id and index
+          <Tournament key={`${tournament._id}-${index}`} tournament={tournament} />
         ))
       ) : (
         <p className="text-center text-lg text-gray-500">You have not joined any tournaments.</p>
