@@ -23,7 +23,7 @@ const DropdownWithComponents = () => {
 
   // Handle Profile navigation (you can modify this to point to the profile page or modal)
   const handleProfile = () => {
-    router.push('/profile'); // Assuming you have a profile page
+    router.push('/player/profile'); // Assuming you have a profile page
   };
 
   return (
