@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import SearchBar from './SearchBar'; // Import the SearchBar component
+import DropdownWithComponents from './DropDownMenu';
 
 const Navbar = () => {
   const [username, setUsername] = useState('');  // State to store the username
@@ -38,16 +39,17 @@ const Navbar = () => {
   }, []);
 
   return (
-    <nav className="bg-gray-900 p-4 shadow-md mb-6 w-full border-b border-gray-700 rounded-lg">
+    <nav className="bg-gray-900 p-4 shadow-md mb-6 w-full border-b border-gray-700 rounded-xl">
       <div className="flex justify-between items-center w-full">
         <div className="text-white text-2xl font-bold">
           {/* Display the username or fallback to a default text */}
           {loading ? 'Loading...' : username ? username : 'My Tournament App'}
         </div>
         
-        {/* Horizontal SearchBar */}
-        <div className="flex items-center space-x-4">
+        {/* Align the SearchBar and Dropdown to the right */}
+        <div className="flex items-center space-x-4 ml-auto">
           <SearchBar />
+          <DropdownWithComponents />
         </div>
       </div>
     </nav>

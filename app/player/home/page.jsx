@@ -1,10 +1,10 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import TournamentList from '@/components/tournament/TournamentList';
-import OrganiserList from '@/components/organisers/OrganiserList';
-import ReportForm from '@/components/report/ReportForm';
-import Navbar from '@/components/navbar/Navbar';
+import TournamentList from '@/components/player/tournament/TournamentList';
+import OrganiserList from '@/components/player/organisers/OrganiserList';
+import ReportForm from '@/components/player/Report/ReportForm';
+import Navbar from '@/components/player/navbar/Navbar';
 
 export default function HomePage() {
   const [loading, setLoading] = useState(true);
@@ -32,11 +32,10 @@ export default function HomePage() {
           <OrganiserList />  {/* Render OrganiserList component */}
         </div>
       </div>
-      
-      {/* Report a Team Form Section */}
-      <div className="mt-8">
-        <ReportForm />  {/* Render ReportForm component */}
+      <div className="w-1/2">
+          <ReportForm/>
       </div>
+
     </div>
   );
 }
