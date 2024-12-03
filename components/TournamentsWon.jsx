@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Cookies from 'js-cookie'; // Import the cookie package
 
 const TournamentsWon = () => {
   const [tournamentsWon, setTournamentsWon] = useState(null);
@@ -9,8 +8,8 @@ const TournamentsWon = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const token = Cookies.get('token'); // Access the token from cookies
-    console.log('Token from cookies:', token); // Log the token for debugging
+    const token = localStorage.getItem('token');
+    console.log('Token from localStorage:', token);
 
     if (!token) {
       setError('No token found');
@@ -28,17 +27,20 @@ const TournamentsWon = () => {
           },
         });
 
+        console.log('Authorization Header:', `Bearer ${token}`);
+
         if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
+          const errorMessage = await response.text();
+          throw new Error(`Error: ${response.statusText} - ${errorMessage}`);
         }
 
         const data = await response.json();
         console.log('Tournaments data:', data);
 
-        if (data.tournamentsWon !== undefined) {
+        if (data && typeof data.tournamentsWon === 'number') {
           setTournamentsWon(data.tournamentsWon);
         } else {
-          throw new Error('Invalid response format');
+          setError('Invalid response format');
         }
       } catch (error) {
         console.error('There was a problem with the fetch operation:', error);

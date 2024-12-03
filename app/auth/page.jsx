@@ -33,6 +33,11 @@ export default function AuthPage() {
       });
 
       if (res.ok) {
+        const responseData = await res.json();
+
+      // Save token in localStorage if present
+      if (responseData.token) {
+        localStorage.setItem('token', responseData.token);}
         if (role === "player") {
           // Redirect to player home page after successful sign-in/signup
           router.push("/player/home");

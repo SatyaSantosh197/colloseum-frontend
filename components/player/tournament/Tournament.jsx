@@ -17,9 +17,11 @@ const Tournament = ({ tournament }) => {
 
   // Function to navigate to tournament details page
   const handleViewDetails = () => {
-    router.push(`/player/home/tournament/${tournament._id}`);  // Navigate to tournament details page
+    const tournamentId = tournament.tid;  // Make sure you're using the correct `tid`, not `_id`
+    console.log('Using tournament ID:', tournamentId);  // Should log `21` for example
+    router.push(`/player/home/tournament/${tournamentId}`);
   };
-
+  
   // Ensure the component is rendered only on the client side
   if (!isClient) return null;
 
