@@ -9,41 +9,50 @@ const TournamentList = () => {
 
   useEffect(() => {
     const fetchTournaments = async () => {
-      const token = localStorage.getItem('user_jwt');
-      const response = await fetch('http://localhost:5000/api/tournament/tournamentsEnrolled', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`,
-        },
-        credentials: 'include',
-      });
+      try {
+        const token = localStorage.getItem('user_jwt');
+        console.log(token);
 
-      if (response.ok) {
-        const data = await response.json();
-        setJoinedTournaments(data.tournaments); // Assuming 'tournaments' is the correct field in the response
-      } else {
-        console.error('Failed to fetch tournaments');
+        const response = await fetch('http://localhost:5000/api/tournament/tournamentsEnrolled', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+          },
+          credentials: 'include',
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);  // Log to check response structure
+
+          setJoinedTournaments(data.tournaments); // Assuming 'tournaments' is the correct field in the response
+        } else {
+          console.error('Failed to fetch tournaments');
+        }
+        setLoading(false);
+      } catch (error) {
+        console.error('Error:', error);
+        setLoading(false);
       }
-
-      setLoading(false);
     };
 
     fetchTournaments();
   }, []);
 
   if (loading) {
-    return <p>Loading tournaments...</p>;
+    return <p className="text-center text-xl text-gray-700">Loading tournaments...</p>;
   }
 
   return (
-    <div className="space-y-4">
+    <div className="max-w-4xl mx-auto p-6 bg-gray-50 rounded-lg shadow-md space-y-6">
       {joinedTournaments.length > 0 ? (
         joinedTournaments.map((tournament) => (
+          // Make sure you're passing the tournament object directly
           <Tournament key={tournament._id} tournament={tournament} />
         ))
       ) : (
-        <p>You have not joined any tournaments.</p>
+        <p className="text-center text-lg text-gray-500">You have not joined any tournaments.</p>
       )}
     </div>
   );

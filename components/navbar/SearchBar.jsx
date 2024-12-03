@@ -1,3 +1,5 @@
+// SearchBar.jsx
+
 'use client';
 
 import { useState } from 'react';
@@ -64,42 +66,29 @@ const SearchBar = () => {
       setLoading(false);
     }
   };
-  
 
   return (
-    <div className="search-container">
-      <form onSubmit={handleSubmit} className="search-form">
-        <input
-          type="text"
-          id="search-input"
-          name="searchTerm"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          placeholder="'?' for tournaments, ':' for organisers"
-          required
-          aria-label="Search tournaments and organisers"
-          className="search-input"
-        />
-        <button type="submit" className="search-button" disabled={loading}>
-          {loading ? 'Searching...' : 'Search'}
-        </button>
-      </form>
-
-      {message && <p className="error-message">{message}</p>}
-
-      <div className="search-results">
-        {searchResults.length > 0 && (
-          <ul>
-            {searchResults.map((result, index) => (
-              <li key={index}>
-                {result.name || result.username || 'No Name'}
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </div>
+    <form onSubmit={handleSubmit} className="flex items-center space-x-4">
+      <input
+        type="text"
+        id="search-input"
+        name="searchTerm"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        placeholder="'?' for tournaments, ':' for organisers"
+        required
+        aria-label="Search tournaments and organisers"
+        className="p-2 w-60 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      />
+      <button
+        type="submit"
+        className="p-2 bg-blue-600 text-white font-semibold rounded-md shadow-md hover:bg-blue-700 focus:ring-2 focus:ring-blue-500 transition duration-200"
+        disabled={loading}
+      >
+        {loading ? 'Searching...' : 'Search'}
+      </button>
+    </form>
   );
 };
 
-export default SearchBar;
+export default SearchBar; // Make sure you are exporting it as default

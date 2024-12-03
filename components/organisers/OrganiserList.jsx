@@ -1,28 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Button } from '@/components/ui/button'; // Assuming you have a button component
-
-const OrganiserItem = ({ organiser }) => {
-  return (
-    <div className="organiser-item p-4 border rounded-md shadow-md">
-      <h3 className="text-xl font-bold">{organiser.username}</h3>
-      <div className="organiser-description mt-2">
-        <p><strong>Email:</strong> {organiser.email}</p>
-        <p><strong>Tournaments Organized:</strong></p>
-        <ul>
-          {organiser.tournaments && organiser.tournaments.length > 0 ? (
-            organiser.tournaments.map((tournament) => (
-              <li key={tournament._id}>{tournament.name}</li>
-            ))
-          ) : (
-            <li>No tournaments organized yet</li>
-          )}
-        </ul>
-      </div>
-    </div>
-  );
-};
+import OrganiserItem from './OrganiserItem'; // Assuming OrganiserItem is a separate component
 
 const OrganiserList = () => {
   const [followedOrganisers, setFollowedOrganisers] = useState([]);
@@ -60,17 +39,17 @@ const OrganiserList = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="text-center text-xl text-gray-700">Loading...</div>;
   }
 
   return (
-    <div>
+    <div className="max-w-4xl mx-auto p-6 bg-gray-50 rounded-lg shadow-md space-y-6">
       {followedOrganisers.length > 0 ? (
         followedOrganisers.map((organiser) => (
           <OrganiserItem key={organiser._id} organiser={organiser} />
         ))
       ) : (
-        <p>No followed organisers.</p>
+        <p className="text-center text-lg text-gray-500">You are not following any organisers yet.</p>
       )}
     </div>
   );
