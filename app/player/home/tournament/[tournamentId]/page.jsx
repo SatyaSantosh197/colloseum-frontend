@@ -27,8 +27,8 @@ const TournamentPage = () => {
         const response = await fetch(`http://localhost:5000/api/tournament/${tournamentId}`, {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,  // Passing the token as Bearer
           },
           credentials: 'include',
         }); // Correct API URL

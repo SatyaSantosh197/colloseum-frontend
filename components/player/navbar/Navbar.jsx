@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import SearchBar from './SearchBar'; // Import the SearchBar component
 import DropdownWithComponents from './DropDownMenu';
+import NotificationBox from '../notifications/NotificationBox';
 
 const Navbar = () => {
   const [username, setUsername] = useState('');  // State to store the username
@@ -49,6 +50,7 @@ const Navbar = () => {
         {/* Align the SearchBar and Dropdown to the right */}
         <div className="flex items-center space-x-4 ml-auto">
           <SearchBar />
+          <NotificationBox />
           <DropdownWithComponents />
         </div>
       </div>
