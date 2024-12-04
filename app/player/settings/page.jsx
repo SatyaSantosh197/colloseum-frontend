@@ -25,9 +25,9 @@ export default function ProfileSettings() {
       <div className="min-h-screen bg-gray-100 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-xl mt-[170px] mx-auto bg-white rounded-xl shadow-md overflow-hidden">
           <div className="md:flex">
-            {/* <div className="md:flex-shrink-0 p-8">
+            <div className="md:flex-shrink-0 p-8">
               <ProfilePicture />
-            </div> */}
+            </div>
             <div className="p-8 w-full">
               <h1 className="text-2xl font-bold mb-6">Profile Settings</h1>
               <Suspense fallback={<LoadingFallback />}>

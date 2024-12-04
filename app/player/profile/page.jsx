@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import Navbar from '@/components/player/profileNavbar/Navbar';
+import ProfilePicture from '@/components/player/profileNavbar/ProfilePicture';
+import { UserProvider } from '@/context/UserContext';
 
 const PlayerProfile = () => {
   const [playerData, setPlayerData] = useState(null);
@@ -81,35 +83,47 @@ const PlayerProfile = () => {
       </div>
       <main className="flex-grow container mx-auto px-6 py-12">
         <div className="space-y-8">
+          
           {/* Player Profile Section */}
           <section className="bg-white dark:bg-gray-800 p-10 rounded-3xl shadow-lg">
-            <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-6">
-              Player Profile
-            </h2>
-            <div className="space-y-4">
-              <div className="flex items-center">
-                <span className="w-40 font-medium text-gray-700 dark:text-gray-300">Username:</span>
-                <span className="text-gray-900 dark:text-gray-100">{playerData.username}</span>
-              </div>
-              <div className="flex items-center">
-                <span className="w-40 font-medium text-gray-700 dark:text-gray-300">Email:</span>
-                <span className="text-gray-900 dark:text-gray-100">{playerData.email}</span>
-              </div>
-              <div className="flex items-center">
-                <span className="w-40 font-medium text-gray-700 dark:text-gray-300">Team:</span>
-                  <Button
-                      onClick={handleTeamRedirect}
-                      className={`mt-0 ${
-                        playerData.team
-                          ? 'bg-black hover:bg-gray-800 text-white shadow-md transform transition-all duration-200 ease-in-out hover:scale-105'
-                          : 'border border-black text-white hover:bg-black-100 shadow-sm transform transition-all duration-200 ease-in-out hover:scale-105'
-                      } rounded-lg px-6 py-3 text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2`}
+            <UserProvider>
+            <div className="ml-[40px] flex items-center space-x-16">
+                <div className="w-48 h-48 rounded-full overflow-hidden"> {/* Profile Picture container */}
+                  <ProfilePicture />
+                </div>
+                <div className="flex-grow"> {/* Content container */}
+                  <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-6">
+                    Player Profile
+                  </h2>
+                  <div className="space-y-4">
+                    <div className="flex items-center">
+                      <span className="w-40 font-medium text-gray-700 dark:text-gray-300">Username:</span>
+                      <span className="text-gray-900 dark:text-gray-100">{playerData.username}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span className="w-40 font-medium text-gray-700 dark:text-gray-300">Email:</span>
+                      <span className="text-gray-900 dark:text-gray-100">{playerData.email}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span className="w-40 font-medium text-gray-700 dark:text-gray-300">Team:</span>
+                      <Button
+                        onClick={handleTeamRedirect}
+                        className={`mt-0 ${
+                          playerData.team
+                            ? 'bg-black hover:bg-gray-800 text-white shadow-md transform transition-all duration-200 ease-in-out hover:scale-105'
+                            : 'border border-black text-white hover:bg-black-100 shadow-sm transform transition-all duration-200 ease-in-out hover:scale-105'
+                        } rounded-lg px-6 py-3 text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2`}
                       >
-                      {playerData.team ? `${playerData.team.name}` : 'No Team'}
-                  </Button>
+                        {playerData.team ? `${playerData.team.name}` : 'No Team'}
+                      </Button>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
+            </UserProvider>
           </section>
+
+
 
           {/* Player Stats Section */}
           <section className="bg-white dark:bg-gray-800 p-10 rounded-3xl shadow-lg">

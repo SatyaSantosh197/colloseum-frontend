@@ -1,14 +1,7 @@
-<<<<<<< Updated upstream
-import React, { useState, useRef } from 'react';
-import Image from 'next/image';
-import { useUser } from '@/context/UserContext';
-import { Button } from "@/components/ui/button"
-=======
 import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
-import { useUser } from "@/contexts/UserContext";
+import { useUser } from "@/context/UserContext";
 import { Button } from "@/components/ui/button";
->>>>>>> Stashed changes
 import {
   Dialog,
   DialogContent,
