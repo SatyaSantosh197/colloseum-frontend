@@ -17,13 +17,14 @@ const WinPercentage = () => {
             Authorization: `Bearer ${localStorage.getItem('token')}`, // Authorization header with token
           },
         });
-
+  
         if (!response.ok) {
           const errorData = await response.json();
           throw new Error(errorData.message || 'Failed to fetch win percentage');
         }
-
+  
         const data = await response.json();
+        console.log("Win percentage response data:", data); // Log the data
         setWinPercentage(data.winPercentage);
       } catch (err) {
         console.error('Error fetching win percentage:', err.message);
@@ -32,9 +33,10 @@ const WinPercentage = () => {
         setLoading(false); // Set loading state to false after fetch
       }
     };
-
+  
     fetchWinPercentage();
   }, []);
+  
 
   if (loading) {
     return (
@@ -64,7 +66,9 @@ const WinPercentage = () => {
       <CardContent>
         <div className="flex flex-col items-center p-4 bg-gray-700 bg-opacity-50 rounded-lg hover:bg-opacity-70 transition-colors duration-300">
           <BarChartIcon className="w-8 h-8 text-green-500 mb-2 animate-pulse" />
-          <span className="text-2xl font-bold text-blue-600">{winPercentage}%</span>
+          <span className="text-2xl font-bold text-blue-600">
+  {winPercentage !== null && winPercentage !== undefined ? `${winPercentage}%` : '0%'}
+</span>
         </div>
       </CardContent>
     </Card>

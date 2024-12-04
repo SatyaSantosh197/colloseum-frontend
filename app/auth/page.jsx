@@ -13,6 +13,8 @@ export default function AuthPage() {
   const role = searchParams.get("role");
 
   const [isSignUp, setIsSignUp] = useState(false);
+  const [loading, setLoading] = useState(false); // Loading state
+  const [errorMessage, setErrorMessage] = useState(""); // To show error messages
   const form = useForm();
 
   useEffect(() => {
@@ -23,6 +25,9 @@ export default function AuthPage() {
 
   const handleSubmit = async (data) => {
     const endpoint = `/auth/${role}/${isSignUp ? "signup" : "signin"}`;
+
+    setLoading(true);
+    setErrorMessage(""); // Reset error message before each submit
 
     try {
       const res = await fetch(`http://localhost:5000${endpoint}`, {
@@ -35,23 +40,25 @@ export default function AuthPage() {
       if (res.ok) {
         const responseData = await res.json();
 
-      // Save token in localStorage if present
-      if (responseData.token) {
-        localStorage.setItem('token', responseData.token);}
+        // Save token in localStorage if present
+        if (responseData.token) {
+          localStorage.setItem("token", responseData.token);
+        }
+
         if (role === "player") {
-          // Redirect to player home page after successful sign-in/signup
           router.push("/player/home");
         } else {
-          // You can handle other roles here if needed (e.g., for organisers)
           router.push(`/${role}/dashboard`);
         }
       } else {
         const errorData = await res.json();
-        alert(`Error: ${errorData.errorMessage}`);
+        setErrorMessage(errorData.errorMessage || "Something went wrong.");
       }
     } catch (error) {
       console.error("Error during submission:", error);
-      alert("An error occurred. Please try again.");
+      setErrorMessage("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -61,7 +68,6 @@ export default function AuthPage() {
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      {/* Video Background */}
       <video
         className="absolute top-0 left-0 w-full h-auto transform scale-150 object-cover"
         src="/videos/authBackground.mp4"
@@ -70,10 +76,8 @@ export default function AuthPage() {
         muted
       ></video>
 
-      {/* Content Overlay */}
       <div className="relative z-10 flex justify-center items-center h-screen bg-black bg-opacity-50">
         <div className="w-full max-w-md p-6 bg-white bg-opacity-90 rounded-lg shadow-md">
-          {/* Sign In or Sign Up Form */}
           <h2 className="text-center text-2xl font-bold mb-4">
             {isSignUp ? "Sign Up" : "Sign In"} as {role.charAt(0).toUpperCase() + role.slice(1)}
           </h2>
@@ -90,7 +94,6 @@ export default function AuthPage() {
                 <FormMessage />
               </FormItem>
 
-              {/* Email Field (only for Sign Up) */}
               {isSignUp && (
                 <FormItem>
                   <FormLabel>Email</FormLabel>
@@ -117,13 +120,14 @@ export default function AuthPage() {
                 <FormMessage />
               </FormItem>
 
-              <Button type="submit" className="w-full">
-                {isSignUp ? "Sign Up" : "Sign In"}
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? "Loading..." : isSignUp ? "Sign Up" : "Sign In"}
               </Button>
             </form>
           </Form>
 
-          {/* Toggle Between Sign In and Sign Up */}
+          {errorMessage && <div className="text-red-500 mt-4">{errorMessage}</div>}
+
           <div className="mt-4 text-center">
             <p className="text-sm">
               {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
@@ -136,7 +140,6 @@ export default function AuthPage() {
             </p>
           </div>
 
-          {/* Back to Role Selection */}
           <div className="mt-4 text-center">
             <Button variant="link" onClick={() => router.push("/")}>
               Back to Role Selection
