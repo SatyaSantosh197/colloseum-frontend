@@ -240,8 +240,8 @@ const TeamDashboard = () => {
           </div>
         </Card>
 
-        {/* Team Members */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* Team Members */}
           <Card className="space-y-6 p-8">
             <h3 className="text-xl font-semibold">Team Members</h3>
             <div className="space-y-4">
@@ -260,6 +260,25 @@ const TeamDashboard = () => {
                 </div>
               ))}
             </div>
+          </Card>
+
+          {/* Participating Tournaments */}
+          <Card className="space-y-6 p-8">
+            <h3 className="text-xl font-semibold">Participating Tournaments</h3>
+            {team?.tournaments?.length === 0 ? (
+              <p className="text-lg">No tournaments participated yet.</p>
+            ) : (
+              <ul className="space-y-4">
+                {team?.tournaments?.map((tournament) => (
+                  <li key={tournament._id} className="p-4 border rounded-lg bg-gray-200">
+                    <div className="flex justify-between items-center">
+                      <p className="text-lg">{tournament.name}</p>
+                      <Badge variant="outline">{tournament.status}</Badge>
+                    </div>
+                  </li>
+                ))}
+              </ul>
+            )}
           </Card>
         </div>
 
