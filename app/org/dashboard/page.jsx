@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState } from 'react';
 
@@ -10,6 +10,7 @@ import ReportedTeams from '@/components/org/ReportedTeams';
 import OrganiserControls from '@/components/org/CreateTournOrg'; // Includes Create Tournament Button
 
 import OrganiserNavbar from '@/components/org/NavOrg';
+
 
 const Dashboard = () => {
   const [isReportDialogOpen, setReportDialogOpen] = useState(false); // State to manage the report dialog visibility
@@ -31,11 +32,19 @@ const Dashboard = () => {
     <div className="dashboard-container min-h-screen bg-gray-100 p-8">
       {/* Include the DashboardHeader component */}
       <OrganiserNavbar handleOpenDialog={handleOpenReportDialog} />
+  {/* Tournaments Section */}
+  <div className="mt-8 px-2">
+        <Card className="shadow-lg bg-white rounded-lg p-6">
+          <CardHeader>
+            <CardTitle className="text-center text-2xl font-semibold text-gray-900">Tournaments</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {/* Tournaments Section */}
+            <TournamentsSection /> {/* Include TournamentsSection component */}
+          </CardContent>
 
-      <div className="mt-8 px-2">
-        <TournamentsSection />  {/* Tournaments Section */}
+        </Card>
       </div>
-
       {/* Organiser Profile Section */}
       <div className="mt-8 px-2">
         <Card className="shadow-lg bg-white rounded-lg p-6">
@@ -47,9 +56,17 @@ const Dashboard = () => {
             <OrganiserReport /> {/* This will render the Organiser Report form inside the dashboard */}
             <OrganiserStats />
             <ReportedTeams />
+          
           </CardContent>
         </Card>
       </div>
+
+      <OrganiserReport
+        open={isReportDialogOpen}
+        onOpenChange={handleCloseReportDialog}
+      /> {/* Pass state and handler to control dialog visibility */}
+
+  
     </div>
   );
 };
