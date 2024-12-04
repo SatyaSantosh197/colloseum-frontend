@@ -1,5 +1,9 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
+import { Button } from '@/components/ui/button';
+
 const Tournament = ({ tournament }) => {
   const [isClient, setIsClient] = useState(false);
   const router = useRouter();
