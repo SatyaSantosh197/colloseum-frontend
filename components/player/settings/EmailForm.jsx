@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useUser } from '@/contexts/UserContext';
+import { useUser } from '@/context/UserContext';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 

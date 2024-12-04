@@ -36,7 +36,7 @@ export default function ReportedTeams() {
 
       // Filter the reports for 'Team' type
       const filteredReports = dashboardData.reports.filter(
-        (report) => report.reportType === "Team"
+        (report) => report.reportType === "Organiser"
       );
 
       setReportedTeams(filteredReports);
@@ -61,14 +61,14 @@ export default function ReportedTeams() {
   return (
     <Card className="w-full">
       <CardHeader>
-        <CardTitle>Reported Teams</CardTitle>
+        <CardTitle>Reported Organiser</CardTitle>
       </CardHeader>
       <CardContent>
         <Table>
           <TableHeader>
             <TableRow>
               <TableHead>Reported By</TableHead>
-              <TableHead>Team Name</TableHead>
+              <TableHead>Organiser Name</TableHead>
               <TableHead>Reason</TableHead>
               <TableHead>Status</TableHead>
               <TableHead>Action</TableHead>
@@ -79,7 +79,7 @@ export default function ReportedTeams() {
               reportedTeams.map((report) => (
                 <TableRow key={report._id}>
                   <TableCell>{report.reportedBy.username}</TableCell>
-                  <TableCell>{report.reportedTeam}</TableCell>
+                  <TableCell>{report.reportedOrganiser.username}</TableCell>
                   <TableCell>{report.reason}</TableCell>
                   <TableCell>{report.status}</TableCell>
                   <TableCell>
@@ -116,8 +116,8 @@ export default function ReportedTeams() {
                   <span className="col-span-3">{selectedReport.reportedBy.username}</span>
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
-                  <span className="font-medium">Team Name:</span>
-                  <span className="col-span-3">{selectedReport.reportedTeam}</span>
+                  <span className="font-medium">Organiser Name:</span>
+                  <span className="col-span-3">{selectedReport.reportedOrganiser.username}</span>
                 </div>
                 <div className="grid grid-cols-4 items-center gap-4">
                   <span className="font-medium">Reason:</span>
