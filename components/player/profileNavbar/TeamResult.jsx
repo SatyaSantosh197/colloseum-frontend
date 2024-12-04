@@ -12,19 +12,20 @@ const TeamResult = ({ team }) => {
   const handleJoinTeam = async () => {
     setJoining(true);
     const token = localStorage.getItem('user_jwt');
-
+  
     try {
-      const response = await fetch(`http://localhost:5000/api/team/join/${team._id}`, {
+      const response = await fetch(`http://localhost:5000/api/team/join`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
         credentials: 'include',
+        body: JSON.stringify({ teamId: team._id }), // Send teamId in the body
       });
-
+  
       const data = await response.json();
-
+  
       if (response.ok) {
         setMessage('Successfully joined the team!');
         toast({
@@ -51,7 +52,7 @@ const TeamResult = ({ team }) => {
       setJoining(false);
     }
   };
-
+  
   return (
     <div className="team-result p-4 border-2 border-gray-200 rounded-lg shadow-sm mb-4">
       <h3 className="text-xl font-bold">{team.name}</h3>
