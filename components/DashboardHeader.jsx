@@ -2,16 +2,18 @@
 
 import React, { useEffect, useState } from 'react';
 import { BeatLoader } from 'react-spinners'; // ShadCN BeatLoader for loading state
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'; // ShadCN card components
+import { Card, CardContent } from '@/components/ui/card'; // ShadCN card components
 
 const DashboardHeader = () => {
   const [username, setUsername] = useState(null); // Store the username
+  const [email, setEmail] = useState(null); // Store the email
+  const [description, setDescription] = useState(null); // Store the description
   const [loading, setLoading] = useState(true); // Handle loading state
   const [error, setError] = useState(null); // Handle errors
 
   useEffect(() => {
-    // Fetch organiser name from the backend API
-    const fetchOrganiserName = async () => {
+    // Fetch organiser details from the backend API
+    const fetchOrganiserDetails = async () => {
       const token = localStorage.getItem("token"); // Get the token from localStorage
       if (!token) {
         setError("Unauthorized access. Please log in.");
@@ -31,8 +33,10 @@ const DashboardHeader = () => {
         if (response.ok) {
           const data = await response.json();
           setUsername(data.username); // Set the fetched username
+          setEmail(data.email); // Set the fetched email
+          setDescription(data.description); // Set the fetched descriptio
         } else {
-          setError('Failed to fetch organiser name'); // Handle failed response
+          setError('Failed to fetch organiser details'); // Handle failed response
         }
       } catch (error) {
         setError('Error fetching data'); // Handle any errors
@@ -41,7 +45,7 @@ const DashboardHeader = () => {
       }
     };
 
-    fetchOrganiserName();
+    fetchOrganiserDetails();
   }, []); // Empty dependency array to run only on component mount
 
   if (loading) {
@@ -56,11 +60,18 @@ const DashboardHeader = () => {
     <header className="bg-white shadow-md p-4">
       <Card className="max-w-2xl mx-auto p-3 shadow-sm bg-white align-center">
         <CardContent>
-          {/* Check if username is loaded, display it or error message */}
+          {/* Display the username */}
           <div className="text-lg text-gray-800">{username ? `${username}'s Profile` : 'Profile'}</div>
-          {error && (
-            <div className="text-red-500 mt-4">{error}</div> // Show error if fetching fails
-          )}
+          
+          {/* Display the email */}
+          <div className="text-md text-gray-600 mt-2">Email: {email ? email : 'Not available'}</div>
+
+          {/* Display the description */}
+          <div className="text-md text-gray-600 mt-2">Description: {description ? description : 'No description available'}</div>
+
+   
+          {/* Show error if fetching fails */}
+          {error && <div className="text-red-500 mt-4">{error}</div>}
         </CardContent>
       </Card>
     </header>

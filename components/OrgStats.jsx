@@ -5,9 +5,13 @@ import { BeatLoader } from 'react-spinners'; // ShadCN BeatLoader for loading st
 import { Alert } from '@/components/ui/alert'; // ShadCN Alert (optional for error handling)
 
 const OrganiserStats = () => {
-  const [organiserStats, setOrganiserStats] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [username, setUsername] = useState(null); // Store the username
+  const [email, setEmail] = useState(null); // Store the email
+  const [description, setDescription] = useState(null); // Store the description
+  const [tournamentsConducted, setTournamentsConducted] = useState(null); // Store tournaments conducted
+  const [rating, setRating] = useState(null); // Store rating
+  const [loading, setLoading] = useState(true); // Handle loading state
+  const [error, setError] = useState(null); // Handle errors
 
   useEffect(() => {
     const fetchOrganiserStats = async () => {
@@ -28,7 +32,12 @@ const OrganiserStats = () => {
 
         const data = await response.json();
         if (response.ok) {
-          setOrganiserStats(data);  // Store the organiser data in state
+          // Set the individual fields in state
+          setUsername(data.username);
+          setEmail(data.email);
+          setDescription(data.description);
+          setTournamentsConducted(data.tournamentsConducted);
+          setRating(data.rating);
         } else {
           setError(data.message || 'Failed to fetch organiser data');
         }
@@ -78,18 +87,22 @@ const OrganiserStats = () => {
         <CardTitle className="text-center text-2xl font-semibold text-gray-900">Organiser Stats</CardTitle>
       </CardHeader>
       <CardContent>
-        <section className="stats-section">
-          <div className="stats">
-            <h3>Followers:</h3>
-            <p>{organiserStats.visibilitySettings.followersVisible ? organiserStats.followerCount : 'Hidden'}</p>
+        <section className="stats-section flex flex-wrap justify-between">
+          <div className="stats w-1/2 sm:w-1/4 p-2">
+            <h3 className="font-semibold">Username:</h3>
+            <p>{username}</p>
           </div>
-          <div className="stats">
-            <h3>Total Prize Pool:</h3>
-            <p>{organiserStats.visibilitySettings.prizePoolVisible ? organiserStats.totalPrizePool : 'Hidden'}</p>
+          <div className="stats w-1/2 sm:w-1/4 p-2">
+            <h3 className="font-semibold">Email:</h3>
+            <p>{email}</p>
           </div>
-          <div className="stats">
-            <h3>Total Tournaments Held:</h3>
-            <p>{organiserStats.visibilitySettings.tournamentsVisible ? organiserStats.totalTournaments : 'Hidden'}</p>
+          <div className="stats w-1/2 sm:w-1/4 p-2">
+            <h3 className="font-semibold">Description:</h3>
+            <p>{description}</p>
+          </div>
+          <div className="stats w-1/2 sm:w-1/4 p-2">
+            <h3 className="font-semibold">Rating:</h3>
+            <p>{rating || 'N/A'}</p>
           </div>
         </section>
       </CardContent>
