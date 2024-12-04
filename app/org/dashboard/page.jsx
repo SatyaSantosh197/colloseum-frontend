@@ -1,18 +1,29 @@
 'use client';
-import React from 'react';
-import DashboardHeader from '@/components/DashboardHeader';
+
+import React, { useState } from 'react';
+
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'; // ShadCN components
-import TournamentsSection from '@/components/TournamentsSection'; // Import TournamentsSection component
-import OrganiserReport from '@/components/OrgReports'; // Import OrganiserReport component
-import OrganiserStats from '@/components/OrgStats';
-import ReportedTeams from '@/components/ReportedTeams';
-import OrganiserControls from '@/components/OrgTourn';
-import UpdateDetails from '@/components/UpdateDetails';
+import TournamentsSection from '@/components/org/TournamentsSection'; // Import TournamentsSection component
+import OrganiserReport from '@/components/org/OrgReports'; // Import OrganiserReport component
+import OrganiserStats from '@/components/org/OrgStats'; 
+import ReportedTeams from '@/components/org/ReportedTeams';
+import OrganiserControls from '@/components/org/OrgTourn';
+import UpdateDetails from '@/components/org/UpdateDetails';
+import OrganiserNavbar from '@/components/org/NavOrg';
+
 const Dashboard = () => {
+  const [isReportDialogOpen, setReportDialogOpen] = useState(false); // State to manage the report dialog visibility
+
+  // Function to open the dialog
+  const handleOpenDialog = () => setReportDialogOpen(true);
+
+  // Function to close the dialog
+  const handleCloseDialog = () => setReportDialogOpen(false);
+
   return (
     <div className="dashboard-container min-h-screen bg-gray-100 p-8">
       {/* Include the DashboardHeader component */}
-      <DashboardHeader />
+      <OrganiserNavbar handleOpenDialog={handleOpenDialog} />
 
       {/* Organiser Profile Section */}
       <div className="mt-8 px-2">
@@ -25,7 +36,7 @@ const Dashboard = () => {
             <OrganiserReport /> {/* This will render the Organiser Report form inside the dashboard */}
             <OrganiserStats />
             <ReportedTeams />
-           <UpdateDetails/>
+            <UpdateDetails />
           </CardContent>
         </Card>
       </div>
@@ -43,6 +54,12 @@ const Dashboard = () => {
           <OrganiserControls />
         </Card>
       </div>
+
+      {/* Report Form Dialog */}
+      <OrganiserReport
+        open={isReportDialogOpen}
+        onOpenChange={handleCloseDialog}
+      /> {/* Pass state and handler to control dialog visibility */}
     </div>
   );
 };

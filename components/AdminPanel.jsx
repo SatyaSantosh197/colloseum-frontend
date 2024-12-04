@@ -3,7 +3,7 @@
 import PlayerManagement from './PlayerManagement'
 import OrganizerManagement from './OrganizerManagement'
 import BanHistory from './BanHistory'
-import ReportedTeams from './ReportedTeams'
+import ReportedTeams from './org/ReportedTeams'
 import ReportedOrganizers from './ReportedOrganizers'
 
 export default function AdminPanel() {

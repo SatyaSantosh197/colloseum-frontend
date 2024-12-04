@@ -1,6 +1,6 @@
 import React from 'react'
 import ReportedOrganisers from '@/components/ReportedOrganisers'
-import ReportedTeams from '@/components/ReportedTeams'
+import ReportedTeams from '@/components/org/ReportedTeams'
 
 const page = () => {
   return (
