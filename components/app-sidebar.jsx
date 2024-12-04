@@ -61,7 +61,7 @@ export function AppSidebar({ onItemSelect, ...props }) {
   // Function to handle navigation
   const handleMenuItemClick = (mainTitle, subTitle = null, url) => {
     // Navigate to the appropriate URL (main or sub menu)
-    router.push(`/dashboard/${url}`);
+    router.push(`/admin/${url}`);
     onItemSelect(mainTitle, subTitle); // Update breadcrumb with the selected item
   };
 

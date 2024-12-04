@@ -1,5 +1,4 @@
-
-'use client'
+'use client';
 import { useState } from "react";
 import { AppSidebar } from "@/components/app-sidebar";
 import {
@@ -21,7 +20,6 @@ export default function RootLayout({ children }) {
   const [activeMain, setActiveMain] = useState("");
   const [activeSub, setActiveSub] = useState("");
 
-  // Function to update breadcrumb when a menu item is clicked
   const handleItemSelect = (mainTitle, subTitle = "") => {
     setActiveMain(mainTitle);
     setActiveSub(subTitle);
@@ -60,6 +58,3 @@ export default function RootLayout({ children }) {
     </SidebarProvider>
   );
 }
-
-
-
