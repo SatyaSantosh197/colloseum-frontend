@@ -1,4 +1,7 @@
 import localFont from "next/font/local";
+import { ThemeProvider } from "@/components/theme-provider"
+import { AdminDashboardProvider } from "@/context/AdminDashboardContext";
+import { BanProvider } from "@/context/BanContext";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -23,7 +26,15 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          ><AdminDashboardProvider> 
+            <BanProvider>{children}</BanProvider>
+          </AdminDashboardProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

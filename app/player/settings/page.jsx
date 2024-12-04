@@ -1,7 +1,7 @@
 'use client'
 
 import React, { Suspense } from 'react';
-import { UserProvider } from '@/contexts/UserContext';
+import { UserProvider } from '@/context/UserContext';
 import ProfilePicture from '@/components/player/settings/ProfilePicture';
 import UsernameForm from '@/components/player/settings/UsernameForm';
 import EmailForm from '@/components/player/settings/EmailForm';
