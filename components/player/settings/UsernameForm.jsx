@@ -3,7 +3,7 @@ import { useUser } from '@/context/UserContext';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 
-const UsernameForm = () => {
+const   UsernameForm = () => {
   const { user, setUser } = useUser(); // Assuming `setUser` updates user context
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState('');

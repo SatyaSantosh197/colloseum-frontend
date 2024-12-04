@@ -47,8 +47,10 @@ export default function AuthPage() {
 
         if (role === "player") {
           router.push("/player/home");
+        } else if( role == "admin") {
+          router.push("/admin/user-management");
         } else {
-          router.push(`/${role}/dashboard`);
+          router.push("/org/dashboard");
         }
       } else {
         const errorData = await res.json();
