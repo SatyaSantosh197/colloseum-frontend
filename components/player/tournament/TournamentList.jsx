@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Tournament from './Tournament'; // Import the Tournament component
+import Tournament from './Tournament';
 
 const TournamentList = () => {
   const [joinedTournaments, setJoinedTournaments] = useState([]);
@@ -24,9 +24,9 @@ const TournamentList = () => {
 
         if (response.ok) {
           const data = await response.json();
-          console.log(data);  // Log to check response structure
+          console.log(data);
 
-          setJoinedTournaments(data.tournaments); // Assuming 'tournaments' is the correct field in the response
+          setJoinedTournaments(data.tournaments);
         } else {
           console.error('Failed to fetch tournaments');
         }
@@ -44,12 +44,17 @@ const TournamentList = () => {
     return <p className="text-center text-xl text-gray-700">Loading tournaments...</p>;
   }
 
+  // Filter out duplicate tournaments by `_id`
+  const uniqueTournaments = joinedTournaments.filter(
+    (tournament, index, self) =>
+      index === self.findIndex((t) => t._id === tournament._id)
+  );
+
   return (
     <div className="max-w-4xl mx-auto p-6 bg-gray-50 rounded-lg shadow-md space-y-6">
-      {joinedTournaments.length > 0 ? (
-        joinedTournaments.map((tournament, index) => (
-          // Ensure the key is unique by using both _id and index
-          <Tournament key={`${tournament._id}-${index}`} tournament={tournament} />
+      {uniqueTournaments.length > 0 ? (
+        uniqueTournaments.map((tournament) => (
+          <Tournament key={tournament._id} tournament={tournament} />
         ))
       ) : (
         <p className="text-center text-lg text-gray-500">You have not joined any tournaments.</p>

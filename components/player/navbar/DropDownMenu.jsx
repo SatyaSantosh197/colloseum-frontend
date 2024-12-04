@@ -18,7 +18,7 @@ const DropdownWithComponents = () => {
 
   // Handle Settings navigation
   const handleSettings = () => {
-    router.push('/settings');
+    router.push('/player/settings');
   };
 
   // Handle Profile navigation (you can modify this to point to the profile page or modal)
