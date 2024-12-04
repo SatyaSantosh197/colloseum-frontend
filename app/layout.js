@@ -26,15 +26,10 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          ><AdminDashboardProvider> 
+        <AdminDashboardProvider> 
             <BanProvider>{children}</BanProvider>
           </AdminDashboardProvider>
-        </ThemeProvider>
+        
       </body>
     </html>
   );
