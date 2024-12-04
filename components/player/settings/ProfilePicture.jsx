@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Image from 'next/image';
-import { useUser } from '@/contexts/UserContext';
+import { useUser } from '@/context/UserContext';
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
