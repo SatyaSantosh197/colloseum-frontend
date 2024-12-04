@@ -7,6 +7,7 @@ import OrganiserReport from '@/components/OrgReports'; // Import OrganiserReport
 import OrganiserStats from '@/components/OrgStats';
 import ReportedTeams from '@/components/ReportedTeams';
 import OrganiserControls from '@/components/OrgTourn';
+import UpdateDetails from '@/components/UpdateDetails';
 const Dashboard = () => {
   return (
     <div className="dashboard-container min-h-screen bg-gray-100 p-8">
@@ -24,6 +25,7 @@ const Dashboard = () => {
             <OrganiserReport /> {/* This will render the Organiser Report form inside the dashboard */}
             <OrganiserStats />
             <ReportedTeams />
+           <UpdateDetails/>
           </CardContent>
         </Card>
       </div>
