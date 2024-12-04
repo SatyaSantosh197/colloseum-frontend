@@ -34,31 +34,13 @@ const Dashboard = () => {
       <OrganiserNavbar handleOpenDialog={handleOpenReportDialog} />
   {/* Tournaments Section */}
   <div className="mt-8 px-2">
-        <Card className="shadow-lg bg-white rounded-lg p-6">
-          <CardHeader>
-            <CardTitle className="text-center text-2xl font-semibold text-gray-900">Tournaments</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {/* Tournaments Section */}
-            <TournamentsSection /> {/* Include TournamentsSection component */}
-          </CardContent>
-
-        </Card>
+  <TournamentsSection /> {/* Include TournamentsSection component */}
       </div>
       {/* Organiser Profile Section */}
       <div className="mt-8 px-2">
-        <Card className="shadow-lg bg-white rounded-lg p-6">
-          <CardHeader>
-            <CardTitle className="text-center text-2xl font-semibold text-gray-900">Dashboard Information</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {/* Organiser Reporting Form */}
-            <OrganiserReport /> {/* This will render the Organiser Report form inside the dashboard */}
+      <OrganiserReport /> {/* This will render the Organiser Report form inside the dashboard */}
             <OrganiserStats />
             <ReportedTeams />
-          
-          </CardContent>
-        </Card>
       </div>
 
       <OrganiserReport
