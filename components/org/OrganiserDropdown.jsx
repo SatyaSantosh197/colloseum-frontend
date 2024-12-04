@@ -23,7 +23,7 @@ const OrganiserDropdown = () => {
 
   // Handle Settings navigation
   const handleSettings = () => {
-    router.push('/organiser/settings'); // Assuming you have a settings page for the organiser
+    router.push('/org/settings'); // Assuming you have a settings page for the organiser
   };
 
   return (
