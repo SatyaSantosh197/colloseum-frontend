@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState, useEffect } from 'react';
@@ -6,26 +5,23 @@ import { useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';  // Assuming you are using ShadCN button
 
 const Tournament = ({ tournament }) => {
-  const [isClient, setIsClient] = useState(false); // Client-side check
-  const router = useRouter();  // Hook to access the router
+  const [isClient, setIsClient] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
-    setIsClient(true); // Set isClient to true once the component is mounted
+    setIsClient(true);
   }, []);
 
-  // Helper function to format date
   const formatDate = (dateString) => new Date(dateString).toLocaleDateString();
 
-  // Function to navigate to tournament details page
   const handleViewDetails = () => {
-    router.push(`/player/home/tournament/${tournament._id}`);  // Navigate to tournament details page
+    router.push(`/player/home/tournament/${tournament._id}`); 
   };
 
-  // Ensure the component is rendered only on the client side
   if (!isClient) return null;
 
   return (
-    <div className="tournament-item p-6 border-2 border-gray-200 rounded-xl shadow-lg bg-white hover:shadow-xl transition-shadow duration-300">
+    <div className="tournament-item p-6 border-2 border-gray-200 rounded-xl shadow-lg bg-white hover:shadow-xl transition-shadow duration-300 relative">
       <div className="TName">
         <h4 className="text-2xl font-semibold text-gray-800">{tournament.name}</h4>
       </div>
@@ -42,7 +38,7 @@ const Tournament = ({ tournament }) => {
       {/* View Details Button */}
       <Button 
         onClick={handleViewDetails} 
-        className="mt-4 bg-blue-500 text-white hover:bg-blue-600 transition-colors"
+        className="absolute bottom-4 right-4 bg-black text-white hover:bg-gray-800 transition-colors"
       >
         View Details
       </Button>
