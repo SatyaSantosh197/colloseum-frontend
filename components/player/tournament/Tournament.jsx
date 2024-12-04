@@ -1,9 +1,5 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
-import { Button } from '@/components/ui/button';  // Assuming you are using ShadCN button
-
 const Tournament = ({ tournament }) => {
   const [isClient, setIsClient] = useState(false);
   const router = useRouter();

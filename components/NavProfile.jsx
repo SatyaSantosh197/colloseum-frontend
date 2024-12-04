@@ -1,12 +1,12 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import DropdownWithComponents from '../components/player/navbar/DropDownMenu';
+import SearchProf from './searchProf';  // Import the SearchProf component
+import DropdownWithComponents from './player/navbar/DropDownMenu';
 
-const NavProfile = () => {
-  const [username, setUsername] = useState('');
-  const [loading, setLoading] = useState(true);
+const Navbar = () => {
+  const [username, setUsername] = useState('');  // State to store the username
+  const [loading, setLoading] = useState(true);  // State to track loading status
 
   useEffect(() => {
     // Fetch the username from the API when the component mounts
@@ -16,15 +16,15 @@ const NavProfile = () => {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
+            'Authorization': `Bearer ${localStorage.getItem('authToken')}`, // Assuming JWT token is stored in localStorage
           },
           credentials: 'include',
         });
 
         if (response.ok) {
           const data = await response.json();
-          setUsername(data.username);
-          setLoading(false);
+          setUsername(data.username);  // Set the username state
+          setLoading(false);  // Set loading to false once the data is fetched
         } else {
           console.error('Error fetching username:', response.statusText);
           setLoading(false);
@@ -38,56 +38,17 @@ const NavProfile = () => {
     fetchUsername();
   }, []);
 
-  // Search input preprocessing before form submission
-  const preprocessSearchInput = (e) => {
-    const searchInput = document.getElementById('search-input');
-    const inputValue = searchInput.value.trim(); // Get the input value
-    
-    // Check if input is empty
-    if (!inputValue) {
-      alert("Please enter a search term.");
-      return false; // Prevent form submission
-    }
-
-    // Determine the type of search based on the first character
-    if (inputValue.startsWith('-')) {
-      // Remove '-' for player search
-      searchInput.value = inputValue.slice(1); // Set the cleaned value back to input
-      document.querySelector('.search-form').action = 'http://localhost:5000/api/player/searchPlayer'; // Full URL for player search
-    } else if (inputValue.startsWith('>')) {
-      // Remove '>' for team search
-      searchInput.value = inputValue.slice(1); // Set the cleaned value back to input
-      document.querySelector('.search-form').action = 'http://localhost:5000/api/player/teamName'; // Full URL for team search
-    } else {
-      alert("Invalid search format. Use '>' for teams and '-' for players");
-      return false; // Prevent form submission
-    }
-
-    return true; // Allow form submission
-  };
-
   return (
     <nav className="bg-gray-900 p-4 shadow-md mb-6 w-full border-b border-gray-700 rounded-xl">
       <div className="flex justify-between items-center w-full">
         <div className="text-white text-2xl font-bold">
+          {/* Display the username or fallback to a default text */}
           {loading ? 'Loading...' : username ? username : 'My Tournament App'}
         </div>
-
-        {/* Search Bar */}
+        
+        {/* Align the SearchProf and Dropdown to the right */}
         <div className="flex items-center space-x-4 ml-auto">
-          <form className="search-form" method="GET" action="http://localhost:5000/api/player/searchTournaments" onSubmit={preprocessSearchInput}>
-            <input
-              type="text"
-              id="search-input"
-              name="searchTerm"
-              placeholder=" '>' for teams '-' for player"
-              required
-              aria-label="Search teams and player"
-              className="p-2 rounded-md"
-            />
-          </form>
-
-          {/* Dropdown Menu */}
+          <SearchProf />  {/* This is the updated search component */}
           <DropdownWithComponents />
         </div>
       </div>
@@ -95,4 +56,4 @@ const NavProfile = () => {
   );
 };
 
-export default NavProfile;
+export default Navbar;
