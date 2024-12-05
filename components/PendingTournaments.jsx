@@ -1,4 +1,3 @@
-// components/PendingTournament.jsx
 "use client";
 
 import { useState } from 'react';
@@ -7,6 +6,7 @@ import { TableCell, TableRow } from "@/components/ui/table";
 import ScrollableTable from './ScrollableTable';
 import { useAdminDashboard } from '../context/AdminDashboardContext';
 import { toast } from 'react-toastify'; // For notifications
+import Cookies from 'js-cookie'; // Import js-cookie
 
 export default function PendingTournament() {
   const { dashboardData, setDashboardData } = useAdminDashboard();
@@ -32,32 +32,33 @@ export default function PendingTournament() {
       });
 
       if (!response.ok) {
-        // Extract error message from response if available
         const errorData = await response.json();
         throw new Error(errorData.message || 'Failed to approve tournament');
       }
 
-      // Update the tournament status in the context
       const updatedTournament = await response.json();
 
+      // Update the tournament status in the context
       setDashboardData((prevData) => {
-        // Update tournaments array
         const updatedTournaments = prevData.tournaments.map((tournament) =>
           tournament._id === tournamentId ? updatedTournament : tournament
         );
 
+        const newActiveCount = prevData.activeTournamentsCount + 1;
+
+        // Save the updated activeTournamentsCount to the cookie
+        Cookies.set('activeTournamentsCount', newActiveCount);
+
         return {
           ...prevData,
           tournaments: updatedTournaments,
-          activeTournamentsCount: prevData.activeTournamentsCount + 1, // Assuming approval makes it active
+          activeTournamentsCount: newActiveCount, // Assuming approval makes it active
         };
       });
 
-      // Show success notification
       toast.success('Tournament approved successfully!');
     } catch (error) {
       console.error('Error approving tournament:', error);
-      // Show error notification
       toast.error(`Failed to approve tournament: ${error.message}`);
     } finally {
       setApprovingIds((prev) => prev.filter((id) => id !== tournamentId));
@@ -74,7 +75,6 @@ export default function PendingTournament() {
       <ScrollableTable headers={["Organiser", "Tournament Name", "Start Date", "Prize Pool", "Status", "Action"]}>
         {pendingTournaments.map((tournament) => (
           <TableRow key={tournament._id}>
-            {/* Safely access organiser's username */}
             <TableCell>{tournament.organiser?.username || 'Unknown Organiser'}</TableCell>
             <TableCell>{tournament.name}</TableCell>
             <TableCell>{new Date(tournament.startDate).toLocaleDateString()}</TableCell>
