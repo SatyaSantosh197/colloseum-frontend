@@ -1,22 +1,44 @@
-"use client";
+'use client';
 import React, { useState, useEffect } from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'; // ShadCN Card
 import { BeatLoader } from 'react-spinners'; // ShadCN BeatLoader for loading state
 import { Alert } from '@/components/ui/alert'; // ShadCN Alert (optional for error handling)
-import useFetchAdminDashboard from "@/context/useFetchAdminDashboard"; // Import the hook
+import axios from 'axios'; // For API calls
 
 const OrganiserStats = () => {
   const [loading, setLoading] = useState(true); // Handle loading state
   const [error, setError] = useState(null); // Handle errors
+  const [organiserData, setOrganiserData] = useState(null); // State to hold organiser data
 
-  // Fetch admin dashboard data using the custom hook
-  const dashboardData = useFetchAdminDashboard();
-
+  // Fetch organiser data from API
   useEffect(() => {
-    if (dashboardData) {
-      setLoading(false);
-    }
-  }, [dashboardData]);
+    const fetchOrganiserData = async () => {
+      try {
+        const token = localStorage.getItem('token'); // Get token from localStorage or other storage
+    
+        // If there's no token, handle the error or redirect the user to login
+        if (!token) {
+          setError('Token missing. Please log in.');
+          setLoading(false);
+          return;
+        }
+    
+        const response = await axios.get('http://localhost:5000/api/organiser/getOrganiserName', {
+          headers: {
+            Authorization: `Bearer ${token}`, // Ensure the token is attached
+          },
+        });
+    
+        setOrganiserData(response.data);
+        setLoading(false);
+      } catch (err) {
+        setError('Failed to fetch organiser data');
+        setLoading(false);
+      }
+    };
+    
+    fetchOrganiserData();
+  }, []);
 
   if (loading) {
     return (
@@ -48,17 +70,11 @@ const OrganiserStats = () => {
     );
   }
 
-  // Extract necessary data from the dashboardData
-  const {
-    activeTournamentsCount,
-    avgMonthlyPrizePool,
-    players,
-    avgYearlyPrizePool,
-    tournamentToBeApproved,
-  } = dashboardData;
+  // Destructure the data from organiserData if it's available
+  const { rating, followers, banned } = organiserData || {};
 
   // Helper function to safely format numbers
-  const formatCurrency = (value) => {
+  const formatNumber = (value) => {
     return typeof value === 'number' ? value.toLocaleString() : 'N/A';
   };
 
@@ -69,62 +85,38 @@ const OrganiserStats = () => {
       </CardHeader>
       <CardContent>
         <section className="stats-section flex flex-wrap justify-between">
-          {/* Active Tournaments */}
+          {/* Rating */}
           <div className="stat-card w-full sm:w-1/3 p-4">
             <Card className="shadow-sm bg-black text-white">
               <CardHeader>
-                <CardTitle className="text-lg font-semibold">Active Tournaments</CardTitle>
+                <CardTitle className="text-lg font-semibold">Rating</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-xl text-center">{activeTournamentsCount || 0}</p>
+                <p className="text-xl text-center">{formatNumber(rating)}</p>
               </CardContent>
             </Card>
           </div>
 
-          {/* Avg Monthly Prize Pool */}
+          {/* Followers */}
           <div className="stat-card w-full sm:w-1/3 p-4">
             <Card className="shadow-sm bg-black text-white">
               <CardHeader>
-                <CardTitle className="text-lg font-semibold">Avg Monthly Prize Pool</CardTitle>
+                <CardTitle className="text-lg font-semibold">Followers</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-xl text-center">{formatCurrency(avgMonthlyPrizePool)}</p>
+                <p className="text-xl text-center">{formatNumber(followers)}</p>
               </CardContent>
             </Card>
           </div>
 
-          {/* Players */}
+          {/* Banned */}
           <div className="stat-card w-full sm:w-1/3 p-4">
             <Card className="shadow-sm bg-black text-white">
               <CardHeader>
-                <CardTitle className="text-lg font-semibold">Players</CardTitle>
+                <CardTitle className="text-lg font-semibold">Banned</CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-xl text-center">{players.length}</p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Yearly Prize Pool Data */}
-          <div className="stat-card w-full sm:w-1/3 p-4">
-            <Card className="shadow-sm bg-black text-white">
-              <CardHeader>
-                <CardTitle className="text-lg font-semibold">Yearly Prize Pool</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-xl text-center">{formatCurrency(avgYearlyPrizePool)}</p>
-              </CardContent>
-            </Card>
-          </div>
-
-          {/* Tournaments To Be Approved */}
-          <div className="stat-card w-full sm:w-1/3 p-4">
-            <Card className="shadow-sm bg-black text-white">
-              <CardHeader>
-                <CardTitle className="text-lg font-semibold">To be Approved</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-xl text-center">{tournamentToBeApproved.length}</p>
+                <p className="text-xl text-center">{banned ? 'Yes' : 'No'}</p>
               </CardContent>
             </Card>
           </div>

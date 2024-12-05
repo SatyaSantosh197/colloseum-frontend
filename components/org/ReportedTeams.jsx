@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/table';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button'; // Add Button to toggle views
-import { useAdminDashboard } from '@/context/AdminDashboardContext';
+
 import useFetchAdminDashboard from '@/context/useFetchAdminDashboard';
 
 export default function ReportedTeams() {
