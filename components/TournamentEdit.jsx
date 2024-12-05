@@ -27,7 +27,7 @@ const TournamentEdit = ({ tournamentId }) => {
                     'Authorization': `Bearer ${token}`,  // Passing the token as Bearer
                 },
                 credentials: 'include',
-                }); // Correct API URL
+                });
 
 
                 console.log('Fetch response status:', response.status);
@@ -138,6 +138,8 @@ const handleUpdatePoints = async (e) => {
         return;
     }
 
+    console.log("seleted team:", selectedTeamId);
+
     try {
         const token = localStorage.getItem('user_jwt');
 
@@ -149,7 +151,7 @@ const handleUpdatePoints = async (e) => {
             },
             body: JSON.stringify({
                 tournamentId,
-                teamId: selectedTeamId,
+                teamName: selectedTeamId,
                 additionalPoints: Number(additionalPoints),
             }),
             credentials: 'include',
