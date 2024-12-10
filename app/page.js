@@ -1,25 +1,25 @@
-"use client";
-
-import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-
-export default function HomePage() {
-  const router = useRouter();
-
+'use client'
+import Hero from "@/components/Hero";
+import React from "react";
+import About from "@/components/About";
+import NavBar from "@/components/Navbar";
+import Features from "@/components/Features";
+import Story from "@/components/Story"
+import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
+import CanvasCursor from "@/components/CanvasCursor";
+export default function Home() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-      <h1 className="text-2xl font-bold mb-6">Choose Your Role</h1>
-      <div className="space-y-4">
-        <Button className="w-64" onClick={() => router.push("/auth?role=admin")}>
-          I'm an Admin
-        </Button>
-        <Button className="w-64" onClick={() => router.push("/auth?role=org")}>
-          I'm an Organizer
-        </Button>
-        <Button className="w-64" onClick={() => router.push("/auth?role=player")}>
-          I'm a Player
-        </Button>
-      </div>
+    <div>
+      <main className="relative min-h-screen w-screen overflow-x-hidden">
+        <CanvasCursor /> 
+        <NavBar />
+        <Hero />
+        <About />
+        <Features />
+        <Contact />
+        <Footer />
+    </main>
     </div>
   );
 }
